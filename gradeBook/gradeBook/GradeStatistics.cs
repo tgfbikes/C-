@@ -11,7 +11,7 @@ namespace Grades
         public GradeStatistics()
         {
             HighestGrade = 0;
-            LowestGrade = float.MaxValue;
+            LowestGrade = float.MaxValue; // largest possible number of a float
         }
         public float AverageGrade;
         public float LowestGrade;
