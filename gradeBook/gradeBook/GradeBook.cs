@@ -13,9 +13,24 @@ namespace Grades
             grades = new List<float>();
         }
 
-        public string Name;
-
+        private string _name;
         private List<float> grades;
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    _name = value;
+                }
+                else
+                {
+                    Console.WriteLine("Name must be more than zero characters");
+                }
+            }
+        }
 
         public GradeStatistics ComputeStatistics()
         {
