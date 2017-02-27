@@ -21,13 +21,14 @@ namespace Grades
             get { return _name; }
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     _name = value;
                 }
                 else
                 {
-                    Console.WriteLine("Name must be more than zero characters");
+                    throw new Exception("Name must be more than zero characters");
+                    //Console.WriteLine("Name must be more than zero characters");
                 }
             }
         }
