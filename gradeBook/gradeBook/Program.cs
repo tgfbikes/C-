@@ -15,25 +15,26 @@ namespace Grades
             //synth.Speak("Hello, this is a totally gnarly grade book program, bro.");
 
             GradeBook book = new GradeBook();
-            book.Name = "Stephen's grade book";
+
             book.AddGrade(91);
             book.AddGrade(89.5f);
             book.AddGrade(75);
 
             GradeStatistics stats = book.ComputeStatistics();
 
-            Console.WriteLine(book.Name);
             WriteResult("Average", stats.AverageGrade);
             WriteResult("Lowest", stats.LowestGrade);
-            WriteResult("Highest", (int)stats.HighestGrade);
-        }
-
-        static void WriteResult( string description, int result)
-        {
-            Console.WriteLine(description + ": " + result);
+            WriteResult("Highest", stats.HighestGrade);
+            WriteResult("Letter Grade", stats.LetterGrade);
+            WriteResult("Letter Grade Description", stats.LetterGradeDescription);
         }
 
         static void WriteResult( string description, float result)
+        {
+            Console.WriteLine($"{description}: {result}");
+        }
+
+        static void WriteResult( string description, string result)
         {
             Console.WriteLine($"{description}: {result}");
         }
