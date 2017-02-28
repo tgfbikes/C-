@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Grades
         }
 
         private string _name;
-        private List<float> grades;
+        protected List<float> grades;
         public NameChangedDelegate NameChanged;
 
         public string Name
@@ -23,27 +24,27 @@ namespace Grades
             get { return _name; }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (_name != value && NameChanged != null)
                 {
-                    if (_name != value)
-                    {
-                        NameChangedEventArgs args = new NameChangedEventArgs();
-                        args.ExistingName = _name;
-                        args.NewName = value;
+                    NameChangedEventArgs args = new NameChangedEventArgs();
+                    args.ExistingName = _name;
+                    args.NewName = value;
 
-                        NameChanged(this, args);
-                    }
-                    _name = value;
+                    NameChanged(this, args);
                 }
-                else
-                {
-                    throw new Exception("Name must be more than zero characters");
-                    //Console.WriteLine("Name must be more than zero characters");
-                }
+                _name = value;
             }
         }
 
-        public GradeStatistics ComputeStatistics()
+        public void WriteGrades(TextWriter destination)
+        {
+            for (int i = 0; i < grades.Count; i++)
+            {
+                destination.WriteLine(grades[i]);
+            }
+        }
+
+        public virtual GradeStatistics ComputeStatistics()
         {
             GradeStatistics stats = new GradeStatistics();
 

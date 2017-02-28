@@ -11,15 +11,31 @@ namespace Grades
     {
         static void Main(string[] args)
         {
-            //SpeechSynthesizer synth = new SpeechSynthesizer();
-            //synth.Speak("Hello, this is a totally gnarly grade book program, bro.");
+            string typeOfGradeBook = "throw away";
+            GradeBook book = CreateGradeBook(typeOfGradeBook);
 
-            GradeBook book = new GradeBook();
+            GetBookName(book);
 
-            book.AddGrade(91);
-            book.AddGrade(89.5f);
-            book.AddGrade(75);
+            AddGrades(book);
 
+            WriteResults(book);
+        }
+
+        private static GradeBook CreateGradeBook(string typeOfGradeBook)
+        {
+            switch (typeOfGradeBook)
+            {
+                case "throw away":
+                    return new ThrowAwayGradeBook();
+                case "regular":
+                    return new GradeBook();
+                default:
+                    return new GradeBook();
+            }
+        }
+
+        private static void WriteResults(GradeBook book)
+        {
             GradeStatistics stats = book.ComputeStatistics();
 
             WriteResult("Average", stats.AverageGrade);
@@ -27,6 +43,26 @@ namespace Grades
             WriteResult("Highest", stats.HighestGrade);
             WriteResult("Letter Grade", stats.LetterGrade);
             WriteResult("Letter Grade Description", stats.LetterGradeDescription);
+        }
+
+        private static void AddGrades(GradeBook book)
+        {
+            book.AddGrade(91);
+            book.AddGrade(89.5f);
+            book.AddGrade(75);
+        }
+
+        private static void GetBookName(GradeBook book)
+        {
+            try
+            {
+                Console.WriteLine("Enter a name");
+                book.Name = Console.ReadLine();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         static void WriteResult( string description, float result)
